@@ -20,7 +20,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="">
       <Navbar option = {option} onBack = {handleBack}/>
       <div className="flex flex-col items-center mt-16 w-full h-full">
         {option === null && (
