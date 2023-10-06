@@ -262,7 +262,9 @@ const Landing = () => {
               {processing ? "Processing..." : "Compile and Execute"}
             </button>
           </div>
-          {outputDetails && <OutputDetails outputDetails={outputDetails} />}
+          {outputDetails && <div>
+            <OutputDetails outputDetails={outputDetails} />
+            </div>}
         </div>
       </div>
     </>

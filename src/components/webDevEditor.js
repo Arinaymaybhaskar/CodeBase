@@ -6,9 +6,6 @@ const WebDevEditor = () => {
   const csscodeKey = "csscode";
   const jscodeKey = "jscode";
 
-  const [copyStatus, setCopyStatus] = useState("copy");
-
-
   const [htmlCode, setHtmlCode] = useState(
     localStorage.getItem(htmlcodeKey) || ""
   );
