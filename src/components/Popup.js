@@ -18,11 +18,11 @@ const Popup = (props) => {
   }, [props]);
 
   return props.trigger ? (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50 ">
       <div className="bg-black bg-opacity-50 absolute inset-0"></div>
       <div
         ref={popupRef}
-        className="bg-white p-8 rounded shadow-lg z-10 relative"
+        className="bg-white p-8 rounded shadow-lg z-10 relative max-w-6xl max-h-[70vh] overflow-scroll"
       >
         <button
           className="absolute top-2 right-2 bg-blue-500 text-white px-2 py-1 rounded"
@@ -30,8 +30,7 @@ const Popup = (props) => {
         >
           Close
         </button>
-        <h2>Popup Content</h2>
-        <p>This is the content of the popup.</p>
+        {props.children}
       </div>
     </div>
   ) : (

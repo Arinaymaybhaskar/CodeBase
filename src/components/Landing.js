@@ -18,6 +18,7 @@ import { defaultCode } from "../constants/LanguageDefaultCode";
 
 const Landing = () => {
   const [customInput, setCustomInput] = useState("");
+
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
   const [clear, setClear] = useState(false);
@@ -262,9 +263,11 @@ const Landing = () => {
               {processing ? "Processing..." : "Compile and Execute"}
             </button>
           </div>
-          {outputDetails && <div>
-            <OutputDetails outputDetails={outputDetails} />
-            </div>}
+          {outputDetails && (
+            <div>
+              <OutputDetails outputDetails={outputDetails} />
+            </div>
+          )}
         </div>
       </div>
     </>
