@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CodeEditorWindow from "./CodeEditorWindow";
+import CodeEditorWindow from "../components/CodeEditorWindow";
 import axios from "axios";
 import { classnames } from "../utils/general";
 import { languageOptions } from "../constants/languageOptions";
@@ -9,11 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { defineTheme } from "../lib/defineTheme";
 import useKeyPress from "../hooks/useKeyPress";
-import OutputWindow from "./OutputWindow";
-import CustomInput from "./CustomInput";
-import OutputDetails from "./OutputDetails";
-import ThemeDropdown from "./ThemeDropdown";
-import LanguagesDropdown from "./LanguagesDropdown";
+import OutputWindow from "../components/OutputWindow";
+import CustomInput from "../components/CustomInput";
+import OutputDetails from "../components/OutputDetails";
+import ThemeDropdown from "../components/ThemeDropdown";
+import LanguagesDropdown from "../components/LanguagesDropdown";
 import { defaultCode } from "../constants/LanguageDefaultCode";
 
 const Landing = () => {

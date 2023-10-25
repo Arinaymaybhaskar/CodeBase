@@ -1,6 +1,28 @@
 import React, { useState, useEffect } from "react";
 import MonacoEditor from "react-monaco-editor";
 
+const CodeEditor = ({ label, code, onChange, onClear, onCopy }) => {
+  return (
+    <div className="mb-4">
+      <div className="flex w-full justify-between">
+        <label className="block mb-2">{label}</label>
+        <div className="flex gap-5">
+          <button onClick={onClear}>Clear</button>
+          <button onClick={() => onCopy(code)}>Copy</button>
+        </div>
+      </div>
+      <MonacoEditor
+        height="25vh"
+        width={`100%`}
+        language={label.toLowerCase()}
+        value={code}
+        onChange={onChange}
+        options={{ minimap: { enabled: true }, fontSize: 16 }}
+      />
+    </div>
+  );
+};
+
 const WebDevEditor = () => {
   const htmlcodeKey = "htmlcode";
   const csscodeKey = "csscode";
@@ -42,15 +64,19 @@ const WebDevEditor = () => {
     setCssCode("");
     setJsCode("");
   };
+
   const handleHtmlClear = () => {
     setHtmlCode("");
   };
+
   const handleCSSClear = () => {
     setCssCode("");
   };
+
   const handleJSClear = () => {
     setJsCode("");
   };
+
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
   };
@@ -58,59 +84,27 @@ const WebDevEditor = () => {
   return (
     <div className="p-4 w-full flex gap-2">
       <div className="w-1/2">
-        <div className="mb-4" id="htmlbox">
-          <div className="flex w-full justify-between">
-            <label className="block mb-2">HTML</label>
-            <div className="flex gap-5">
-              <button onClick={handleHtmlClear}>Clear</button>
-              <button onClick={()=>{handleCopy(htmlCode)}}>Copy</button>
-            </div>
-          </div>
-          <MonacoEditor
-            height="25vh"
-            width={`100%`}
-            language="html"
-            value={htmlCode}
-            onChange={setHtmlCode}
-            options={{ minimap: { enabled: true }, fontSize: 16 }}
-          />
-        </div>
-
-        <div className="mb-4" id="cssbox">
-          <div className="flex w-full justify-between">
-            <label className="block mb-2">CSS</label>
-            <div className="flex gap-5">
-              <button onClick={handleCSSClear}>Clear</button>
-              <button onClick={()=>{handleCopy(cssCode)}}>Copy</button>
-            </div>
-          </div>
-          <MonacoEditor
-            height="25vh"
-            width={`100%`}
-            language="css"
-            value={cssCode}
-            onChange={setCssCode}
-            options={{ minimap: { enabled: true }, fontSize: 16 }}
-          />
-        </div>
-
-        <div className="mb-4" id="jsbox">
-          <div className="flex w-full justify-between">
-            <label className="block mb-2">JavaScript</label>
-            <div className="flex gap-5">
-              <button onClick={handleJSClear}>Clear</button>
-              <button onClick={()=>{handleCopy(jsCode)}}>Copy</button>
-            </div>
-          </div>
-          <MonacoEditor
-            height="25vh"
-            width={`100%`}
-            language="javascript"
-            value={jsCode}
-            onChange={setJsCode}
-            options={{ minimap: { enabled: true }, fontSize: 16 }}
-          />
-        </div>
+        <CodeEditor
+          label="HTML"
+          code={htmlCode}
+          onChange={setHtmlCode}
+          onClear={handleHtmlClear}
+          onCopy={handleCopy}
+        />
+        <CodeEditor
+          label="CSS"
+          code={cssCode}
+          onChange={setCssCode}
+          onClear={handleCSSClear}
+          onCopy={handleCopy}
+        />
+        <CodeEditor
+          label="JavaScript"
+          code={jsCode}
+          onChange={setJsCode}
+          onClear={handleJSClear}
+          onCopy={handleCopy}
+        />
       </div>
       <button
         onClick={handleClear}
