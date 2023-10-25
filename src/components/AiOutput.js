@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { sendRequest } from "./openAI";
 
 function AiOutput({ outputDetails }) {
   const [Result, setResult] = useState("");
@@ -45,37 +46,22 @@ function AiOutput({ outputDetails }) {
 
   const handleClick = async () => {
     console.log("handleClick called");
-    try {
-      const apiKey = process.env.REACT_APP_OPEN_AI_API_KEY; // Make sure you have this variable set in your environment
-      const apiUrl = 'https://api.openai.com/v1/completions';
-
-      const requestBody = {
-        model: 'davinci-codex-002', 
-        prompt: 'Your prompt goes here',
-        max_tokens: 50 
-      };
-
-      const response = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify(requestBody)
-      });
-
-      const data = await response.json();
-      setResponse(data.choices[0].text);
-      setResult(true);
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    console.log(request);
+    
+    console.log(process.env.REACT_APP_OPEN_AI_API_KEY);
+    // const res = await sendRequest(codeOutput);
+    // console.log(res);
+    // try {
+    //   setResult(sendRequest(codeOutput));
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
   };
 
 
   return (
     <div>
-                  <p>{response}</p>
+      <p>{response}</p>
       {Result ? (
         <>
           <h1>Result</h1>
