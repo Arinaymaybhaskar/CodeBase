@@ -2,13 +2,6 @@ import React, { useState } from "react";
 import { classnames } from "../utils/general";
 
 const CustomInput = ({ customInput, setCustomInput }) => {
-  const [lines, setLines] = useState(['']);
-
-  const handleChange = (e) => {
-    const text = e.target.value;
-    const linesArray = text.split('\n');
-    setLines(linesArray);
-  };
   return (
     <>
       {" "}

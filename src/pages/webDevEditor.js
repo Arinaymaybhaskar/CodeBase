@@ -5,10 +5,20 @@ const CodeEditor = ({ label, code, onChange, onClear, onCopy }) => {
   return (
     <div className="mb-4">
       <div className="flex w-full justify-between">
-        <label className="block mb-2">{label}</label>
+        <label className="block mb-2 text-xl font-bold">{label}</label>
         <div className="flex gap-5">
-          <button onClick={onClear}>Clear</button>
-          <button onClick={() => onCopy(code)}>Copy</button>
+          <button
+            onClick={onClear}
+            className="bg-red-500 text-white px-3 py-1 rounded"
+          >
+            Clear
+          </button>
+          <button
+            onClick={() => onCopy(code)}
+            className="bg-blue-500 text-white px-3 py-1 rounded"
+          >
+            Copy
+          </button>
         </div>
       </div>
       <MonacoEditor

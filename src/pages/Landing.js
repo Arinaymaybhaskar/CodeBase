@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
+import {
+  ToastContainer,
+  toast
+} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import CodeEditorWindow from "../components/CodeEditorWindow";
 import axios from "axios";
 import { classnames } from "../utils/general";
 import { languageOptions } from "../constants/languageOptions";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
 import { defineTheme } from "../lib/defineTheme";
 import useKeyPress from "../hooks/useKeyPress";
 import OutputWindow from "../components/OutputWindow";
@@ -18,13 +19,13 @@ import { defaultCode } from "../constants/LanguageDefaultCode";
 
 const Landing = () => {
   const [customInput, setCustomInput] = useState("");
-
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
   const [clear, setClear] = useState(false);
   const compilerCodeKey = "compilerCodeKey";
   const compilerLanguageKey = "compilerLanguageKey";
   const compilerThemeKey = "compilerThemeKey";
+  
   const [code, setCode] = useState(
     localStorage.getItem(compilerCodeKey) || null
   );
@@ -41,28 +42,24 @@ const Landing = () => {
   const handleClear = () => {
     setCode("");
     setClear(true);
-    setCustomInput(""); // Clear custom input as well if needed
+    setCustomInput("");
     setTimeout(() => {
-      setClear(false); // Reset clearCode after a short delay
+      setClear(false);
     }, 100);
   };
 
-  const onSelectChange = (sl) => {
-    console.log("selected Option...", sl);
-    setLanguage(sl);
-    setCode(defaultCode[sl.value] || "");
+  const onSelectChange = (selectedOption) => {
+    setLanguage(selectedOption);
+    setCode(defaultCode[selectedOption.value] || "");
   };
 
   useEffect(() => {
     if (enterPress && ctrlPress) {
-      console.log("enterPress", enterPress);
-      console.log("ctrlPress", ctrlPress);
       handleCompile();
     }
   }, [ctrlPress, enterPress]);
 
   useEffect(() => {
-    // Whenever `code` changes, update the localStorage
     if (code) {
       localStorage.setItem(compilerCodeKey, code);
     }
@@ -72,11 +69,10 @@ const Landing = () => {
     switch (action) {
       case "code": {
         setCode(data);
-
         break;
       }
       default: {
-        console.warn("case not handled!", action, data);
+        console.warn("Case not handled!", action, data);
       }
     }
   };
@@ -85,7 +81,6 @@ const Landing = () => {
     setProcessing(true);
     const formData = {
       language_id: language.id,
-      // encode source code in base64
       source_code: btoa(code),
       stdin: btoa(customInput),
     };
@@ -105,25 +100,19 @@ const Landing = () => {
     axios
       .request(options)
       .then(function (response) {
-        console.log("res.data", response.data);
         const token = response.data.token;
         checkStatus(token);
       })
       .catch((err) => {
         let error = err.response ? err.response.data : err;
-        // get error status
         let status = err.response.status;
-        console.log("status", status);
         if (status === 429) {
-          console.log("too many requests", status);
-
           showErrorToast(
-            `Quota of 100 requests exceeded for the Day! Please read the blog on freeCodeCamp to learn how to setup your own RAPID API Judge0!`,
+            `Quota of 100 requests exceeded for the Day!`,
             10000
           );
         }
         setProcessing(false);
-        console.log("catch block...", error);
       });
   };
 
@@ -141,9 +130,7 @@ const Landing = () => {
       let response = await axios.request(options);
       let statusId = response.data.status?.id;
 
-      // Processed - we have a result
       if (statusId === 1 || statusId === 2) {
-        // still processing
         setTimeout(() => {
           checkStatus(token);
         }, 2000);
@@ -152,18 +139,16 @@ const Landing = () => {
         setProcessing(false);
         setOutputDetails(response.data);
         showSuccessToast(`Compiled Successfully!`);
-        console.log("response.data", response.data);
         return;
       }
     } catch (err) {
-      console.log("err", err);
       setProcessing(false);
       showErrorToast();
     }
   };
 
-  function handleThemeChange(th) {
-    const theme = th;
+  const handleThemeChange = (selectedTheme) => {
+    const theme = selectedTheme;
 
     if (["light", "vs-dark"].includes(theme.value)) {
       setTheme(theme);
@@ -174,7 +159,8 @@ const Landing = () => {
         localStorage.setItem(compilerThemeKey, theme.value);
       });
     }
-  }
+  };
+
   useEffect(() => {
     const storedTheme = localStorage.getItem(compilerThemeKey);
     defineTheme(storedTheme || "oceanic-next").then((_) =>
@@ -193,6 +179,7 @@ const Landing = () => {
       progress: undefined,
     });
   };
+
   const showErrorToast = (msg, timer) => {
     toast.error(msg || `Something went wrong! Please try again.`, {
       position: "top-right",
@@ -273,4 +260,5 @@ const Landing = () => {
     </>
   );
 };
+
 export default Landing;
