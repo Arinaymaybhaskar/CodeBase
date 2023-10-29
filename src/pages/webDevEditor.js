@@ -95,6 +95,7 @@ const WebDevEditor = () => {
     <div className="p-4 w-full flex gap-2">
       <div className="w-1/2">
         <CodeEditor
+          width = "100%"
           label="HTML"
           code={htmlCode}
           onChange={setHtmlCode}

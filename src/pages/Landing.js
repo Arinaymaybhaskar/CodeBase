@@ -57,6 +57,7 @@ const Landing = () => {
     if (enterPress && ctrlPress) {
       handleCompile();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ctrlPress, enterPress]);
 
   useEffect(() => {
@@ -112,6 +113,7 @@ const Landing = () => {
             10000
           );
         }
+        console.log(error)
         setProcessing(false);
       });
   };
@@ -241,10 +243,8 @@ const Landing = () => {
             />
             <button
               onClick={handleCompile}
-              disabled={!code}
               className={classnames(
                 "mt-4 p-2 border-2 border-black rounded-[5px]",
-                !code ? "opacity-50" : ""
               )}
             >
               {processing ? "Processing..." : "Compile and Execute"}

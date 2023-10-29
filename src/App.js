@@ -5,6 +5,7 @@ import SvgEditor from "./pages/SvgEditor";
 import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
+import AI from "./pages/ai";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/compiler" element = {<Landing/>}/>
         <Route path="/svg" element = {<SvgEditor/>}/>
         <Route path="/web" element = {<WebDevEditor/>}/>
+        <Route path="/ai" element = {<AI/>}/>
       </Routes>
       </div>
     </>

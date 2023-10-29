@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+
 import { classnames } from "../utils/general";
 
 const CustomInput = ({ customInput, setCustomInput }) => {

@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { sendRequest } from "./openAI";
+import fetchData from "./OpenAI";
 
 function AiOutput({ outputDetails }) {
-  const [Result, setResult] = useState("");
+  const [processing, setProcessing] = useState(false);
   const [response, setResponse] = useState(null);
   const [codeOutput, setCodeOutput] = useState("");
   const code = atob(outputDetails.source_code);
-  const Memory = outputDetails?.memory; // kilobyte
-  const StatusDescription = outputDetails?.status?.description;
-  const StatusCode = outputDetails?.status?.id;
-  const Time = outputDetails?.time; // seconds
-  const CompileOutput = atob(outputDetails?.compile_output);
-  const StdOut = atob(outputDetails?.stdout);
-  const StdErr = atob(outputDetails.stderr);
-  const language = outputDetails.language.name;
+  const {
+    memory,
+    status: { description: StatusDescription, id: StatusCode },
+    time: Time,
+    compile_output: CompileOutput,
+    stdout: StdOut,
+    stderr: StdErr,
+    language: { name: language },
+  } = outputDetails;
 
   const getOutput = () => {
     let output = "";
@@ -42,34 +43,40 @@ function AiOutput({ outputDetails }) {
     getOutput();
   }, [outputDetails]);
 
-  const request = `My ${language} code is ${code} and the output is ${codeOutput} the memory used is: ${Memory}, the time spent is ${Time} seconds what went wrong?`;
+  const request = `what is wrong with my ${language} code? \n ${code} `;
 
-  const handleClick = async () => {
-    console.log("handleClick called");
-    console.log(request);
-    
-    console.log(process.env.REACT_APP_OPEN_AI_API_KEY);
-    // const res = await sendRequest(codeOutput);
-    // console.log(res);
-    // try {
-    //   setResult(sendRequest(codeOutput));
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
-  };
-
+  async function handleClick() {
+    try {
+      setProcessing(true); // Start processing
+      const completedSentence = await fetchData(request);
+      console.log(completedSentence)
+      setResponse(completedSentence);
+    } catch (error) {
+      console.error(error);
+      // Handle error here, e.g., set an error state and display a message
+    } finally {
+      setProcessing(false); // Stop processing
+    }
+  }
 
   return (
-    <div>
-      <p>{response}</p>
-      {Result ? (
+    <div className="p-4 border rounded-lg shadow-lg bg-white">
+      {processing && <p className="text-center">Processing...</p>}
+      {response && (
         <>
-          <h1>Result</h1>
-          <p>{response}</p>
+          <h1 className="text-2xl font-bold mb-2">Result: </h1>
+          <pre className="bg-gray-200 p-2 max-w-lg rounded">{response}</pre>
         </>
-      ) : (
-        <div>
-          <button onClick={handleClick}>ASK</button>
+      )}
+      {!response && (
+        <div className="text-center">
+          <button
+            onClick={handleClick}
+            disabled={processing}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            ASK
+          </button>
         </div>
       )}
     </div>

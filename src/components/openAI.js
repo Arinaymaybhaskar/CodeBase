@@ -1,17 +1,27 @@
-// const {Configuration, OpenAIApi} = require('openai');
+// openAIFunctions.js
+import axios from "axios";
 
-// const configuration = new Configuration({apiKey: process.env.REACT_APP_OPEN_AI_API_KEY});
-// const openai = new OpenAIApi(configuration);
+const API_KEY = process.env.REACT_APP_OPEN_AI_API_KEY;
 
-// export async function sendRequest(message) {
-//     const res = await openai.createCompletion({
-//         model: 'text-davinci-003',
-//         prompt: message,
-//         temperature: 0.7,
-//         max_tokens: 256,
-//         top_p: 1,
-//         frequency_penalty: 0,
-//         presence_penalty: 0
-//     });
-//     return res.data.choices[0].text;
-// }
+const fetchData = async (input) => {
+  const response = await axios.post(
+    "https://api.openai.com/v1/completions",
+    {
+      prompt: input,
+      model: "text-davinci-003",
+      max_tokens: 1000,
+      n: 1,
+      stop: ".",
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${API_KEY}`,
+      },
+    }
+  );
+
+  return response.data.choices[0].text;
+};
+
+export default fetchData;
