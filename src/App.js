@@ -9,9 +9,9 @@ import AI from "./pages/ai";
 
 function App() {
   return (
-    <>
+    <div className="flex h-screen font-montserrat">
       <Navbar/>
-      <div className="pt-16">
+      <div className="w-full flex-1 mt-28 overflow-hidden h-fit">
       <Routes>
         <Route path="/" element = {<Home/>}/>
         <Route path="/compiler" element = {<Landing/>}/>
@@ -20,7 +20,7 @@ function App() {
         <Route path="/ai" element = {<AI/>}/>
       </Routes>
       </div>
-    </>
+    </div>
   );
 }
 
