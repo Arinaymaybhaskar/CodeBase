@@ -1,4 +1,3 @@
-
 import { classnames } from "../utils/general";
 
 const CustomInput = ({ customInput, setCustomInput }) => {
@@ -11,7 +10,7 @@ const CustomInput = ({ customInput, setCustomInput }) => {
         onChange={(e) => setCustomInput(e.target.value)}
         placeholder={`Custom input`}
         className={classnames(
-          "focus:outline-none w-full border-2 border-black z-10 rounded-md   bg-white mt-2"
+          "focus:outline-none w-full border-2 border-black  rounded-md   bg-white mt-2"
         )}
         style={{
           background: `repeating-linear-gradient(
@@ -20,7 +19,7 @@ const CustomInput = ({ customInput, setCustomInput }) => {
             #F9FAFB 1.5em,
             #F3F4F6 1.5em,
             #F3F4F6 3em
-          )`
+          )`,
         }}
       ></textarea>
     </>

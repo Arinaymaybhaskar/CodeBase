@@ -21,6 +21,7 @@ body {
   }
   
   footer {
+    border-style: dotted;
     border-top: #000000 solid 1px;
     position: fixed;
     bottom: 0;
@@ -76,7 +77,7 @@ body {
   }
   
   ::-webkit-scrollbar-thumb {
-    background: var(--accent);
+    background: var(--black);
     -webkit-border-radius: 1ex;
   }
   

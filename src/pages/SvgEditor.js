@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { ZoomIn, ZoomOut } from "lucide-react";
 
 const SvgEditor = () => {
   const [svgCode, setSvgCode] = useState("");
-  const [fileName, setFileName] = useState("image.svg"); // Initialize with a default file name
+  const [fileName, setFileName] = useState("image.svg");
+  const [zoomLevel, setZoomLevel] = useState(1); // Initial zoom level
 
   const handleChange = (event) => {
     const code = event.target.value;
@@ -28,14 +30,22 @@ const SvgEditor = () => {
     const element = document.createElement("a");
     const file = new Blob([svgCode], { type: "image/svg+xml" });
     element.href = URL.createObjectURL(file);
-    element.download = fileName; // Use the user-defined file name
+    element.download = fileName;
     document.body.appendChild(element);
     element.click();
   };
 
+  const handleZoomIn = () => {
+    setZoomLevel((prevZoom) => prevZoom + 0.5);
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel((prevZoom) => Math.max(0.5, prevZoom - 0.5));
+  };
+
   return (
-    <div className="flex w-full w-100vh h-[100vh]">
-      <div className="flex flex-col bg-gray-200 p-4">
+    <div className="flex w-full lg:flex-row md:flex-row flex-col w-100vh h-[100vh] gap-3">
+      <div className="flex flex-col border-r-2 p-4">
         <h2 className="text-2xl font-bold mb-4">SVG Editor</h2>
         <input
           type="file"
@@ -67,11 +77,22 @@ const SvgEditor = () => {
         >
           Download SVG
         </button>
+        <div className="flex mt-4 justify-end w-full z-20">
+          <button onClick={handleZoomIn} className="mr-2 cursor-pointer">
+            <ZoomIn />
+          </button>
+          <button onClick={handleZoomOut} className="cursor-pointer">
+            <ZoomOut />
+          </button>
+        </div>
       </div>
-      <div className="w-full h-full ">
-        <h2 className="text-2xl font-bold mb-4">SVG Preview</h2>
-        <div className="flex flex-col w-full justify-center items-center bg-gray-100 p-4">
-          <div dangerouslySetInnerHTML={{ __html: svgCode }} />
+      <div className="lg:w-full lg:h-full h-1/3 w-[100%] flex justify-center p-2 border items-center overflow-auto">
+        <div className="w-full flex flex-col items-center bg-slate-400 border justify-center h-full overflow-auto transition-all">
+          <div
+            dangerouslySetInnerHTML={{ __html: svgCode }}
+            className={`bg-slate-300 w-full h-full flex justify-center items-center transition-all`}
+            style={{ transform: `scale(${zoomLevel})` }}
+          />
         </div>
       </div>
     </div>

@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  ToastContainer,
-  toast
-} from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CodeEditorWindow from "../components/CodeEditorWindow";
 import axios from "axios";
@@ -25,7 +22,7 @@ const Landing = () => {
   const compilerCodeKey = "compilerCodeKey";
   const compilerLanguageKey = "compilerLanguageKey";
   const compilerThemeKey = "compilerThemeKey";
-  
+
   const [code, setCode] = useState(
     localStorage.getItem(compilerCodeKey) || null
   );
@@ -57,7 +54,7 @@ const Landing = () => {
     if (enterPress && ctrlPress) {
       handleCompile();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ctrlPress, enterPress]);
 
   useEffect(() => {
@@ -108,12 +105,9 @@ const Landing = () => {
         let error = err.response ? err.response.data : err;
         let status = err.response.status;
         if (status === 429) {
-          showErrorToast(
-            `Quota of 100 requests exceeded for the Day!`,
-            10000
-          );
+          showErrorToast(`Quota of 100 requests exceeded for the Day!`, 10000);
         }
-        console.log(error)
+        console.log(error);
         setProcessing(false);
       });
   };
@@ -207,7 +201,7 @@ const Landing = () => {
         draggable
         pauseOnHover
       />
-      <div className="flex flex-row w-full">
+      <div className="flex flex-row w-full ">
         <div className="px-4 py-2">
           <LanguagesDropdown onSelectChange={onSelectChange} />
         </div>
@@ -223,8 +217,8 @@ const Landing = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-row space-x-4 items-start px-4 py-4 w-full">
-        <div className="flex flex-col w-full h-full justify-start items-end">
+      <div className="flex lg:flex-row md:flex-row space-x-4 items-start p-4 w-full flex-col">
+        <div className="flex flex-col w-full h-full justify-start items-end border">
           <CodeEditorWindow
             code={code}
             onChange={onChange}
@@ -234,7 +228,7 @@ const Landing = () => {
           />
         </div>
 
-        <div className="right-container flex flex-shrink-0 w-[30%] flex-col">
+        <div className="right-container flex flex-shrink-0 lg:w-[30%] md:w-[30%] w-[90%] flex-col">
           <OutputWindow outputDetails={outputDetails} />
           <div className="flex flex-col items-end">
             <CustomInput
@@ -244,7 +238,7 @@ const Landing = () => {
             <button
               onClick={handleCompile}
               className={classnames(
-                "mt-4 p-2 border-2 border-black rounded-[5px]",
+                "mt-4 p-2 border-2 border-black rounded-[5px]"
               )}
             >
               {processing ? "Processing..." : "Compile and Execute"}

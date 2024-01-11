@@ -6,73 +6,64 @@ function AiOutput({ outputDetails }) {
   const [response, setResponse] = useState(null);
   const [codeOutput, setCodeOutput] = useState("");
   const code = atob(outputDetails.source_code);
-  const {
-    memory,
-    status: { description: StatusDescription, id: StatusCode },
-    time: Time,
-    compile_output: CompileOutput,
-    stdout: StdOut,
-    stderr: StdErr,
-    language: { name: language },
-  } = outputDetails;
-
-  const getOutput = () => {
-    let output = "";
-    switch (StatusCode) {
-      case 3:
-        output = StdOut;
-        break;
-      case 6:
-        output = CompileOutput;
-        break;
-      case 5:
-      case 7:
-      case 8:
-      case 9:
-      case 10:
-        output = StatusDescription;
-        break;
-      default:
-        output = StdErr;
-        break;
-    }
-    setCodeOutput(output);
-  };
-
-const API_KEY = process.env.REACT_APP_OPEN_AI_API_KEY;
-
-const fetchData = async (input) => {
-  const response = await axios.post(
-    "https://api.openai.com/v1/completions",
-    {
-      prompt: input,
-      model: "text-davinci-003",
-      max_tokens: 1000,
-      n: 1,
-      stop: ".",
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${API_KEY}`,
-      },
-    }
-  );
-
-  return response.data.choices[0].text;
-};
 
   useEffect(() => {
+    const getOutput = () => {
+      let output = "";
+      switch (outputDetails.status.id) {
+        case 3:
+          output = outputDetails.stdout;
+          break;
+        case 6:
+          output = outputDetails.compile_output;
+          break;
+        case 5:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+          output = outputDetails.status.description;
+          break;
+        default:
+          output = outputDetails.stderr;
+          break;
+      }
+      setCodeOutput(output);
+    };
+
     getOutput();
   }, [outputDetails]);
 
-  const request = `what is wrong with my ${language} code? \n ${code} `;
+  const API_KEY = process.env.REACT_APP_OPEN_AI_API_KEY;
+
+  const fetchData = async (input) => {
+    const response = await axios.post(
+      "https://api.openai.com/v1/completions",
+      {
+        prompt: input,
+        model: "text-davinci-003",
+        max_tokens: 1000,
+        n: 1,
+        stop: ".",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${API_KEY}`,
+        },
+      }
+    );
+
+    return response.data.choices[0].text;
+  };
+
+  const request = `what is wrong with my ${outputDetails.language.name} code? \n ${code}. this is the output I am getting: ${codeOutput}`;
 
   async function handleClick() {
     try {
       setProcessing(true); // Start processing
       const completedSentence = await fetchData(request);
-      console.log(completedSentence)
+      console.log(completedSentence);
       setResponse(completedSentence);
     } catch (error) {
       console.error(error);
