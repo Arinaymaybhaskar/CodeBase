@@ -108,3 +108,10 @@ To run this project, you will need to add the following environment variables to
 
 If you have any feedback, please reach out to me at arinaymay.bhaskar.7500@gmail.com
 
+
+## Contributing
+
+Contributions are always welcome! Please feel free to fix any issues or add improvements in the application by forking the repository.
+
+
+
