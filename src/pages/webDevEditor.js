@@ -1,23 +1,52 @@
 import React, { useState, useEffect } from "react";
 import MonacoEditor from "react-monaco-editor";
+import { Eraser, Copy, WrapText, AArrowDown, AArrowUp } from "lucide-react";
+import "./Styles.css";
 
 const CodeEditor = ({ label, code, onChange, onClear, onCopy }) => {
+  const [wordWrap, setWordWrap] = useState(false);
+  const [fontSize, setFontSize] = useState(16); // Default font size
+
+  const toggleWordWrap = () => {
+    setWordWrap(!wordWrap);
+  };
+
+  const increaseFontSize = () => {
+    setFontSize(fontSize + 1);
+  };
+
+  const decreaseFontSize = () => {
+    setFontSize(fontSize - 1);
+  };
+
   return (
-    <div className="mb-4">
-      <div className="flex w-full justify-between">
-        <label className="block mb-2 text-xl font-bold">{label}</label>
-        <div className="flex gap-5">
-          <button
-            onClick={onClear}
-            className="bg-red-500 text-white px-3 py-1 rounded"
-          >
-            Clear
+    <div className="mb-4 w-full border shadow-md border-gray-200 rounded-xl p-2 h-full  mt-[14px] lg:mt-0 md:mt-0">
+      <div className="flex w-full justify-between lg:px-5 md:px-5 mb-1 items-center">
+        <label
+          className="lg:text-2xl md:text-2xl underline underline-offset-[3px] mr-7"
+          style={{ textDecorationThickness: "1px" }}
+        >
+          {label}
+        </label>
+
+        <div
+          className="flex gap-2 border px-2 my-1 rounded-lg  lg:max-w-xs md:max-w-xs overflow-scroll"
+          id="options"
+        >
+          <button onClick={increaseFontSize} title="Increase Font Size">
+            <AArrowUp size={27} color="rgb(0, 0, 0)" strokeWidth={1} />
           </button>
-          <button
-            onClick={() => onCopy(code)}
-            className="bg-blue-500 text-white px-3 py-1 rounded"
-          >
-            Copy
+          <button onClick={decreaseFontSize} title="Decrease Font Size">
+            <AArrowDown size={27} color="rgb(0, 0, 0)" strokeWidth={1} />
+          </button>
+          <button onClick={() => onCopy(code)} title="Copy" strokeWidth={1}>
+            <Copy size={20} color="rgb(0, 0, 0)" />
+          </button>
+          <button onClick={toggleWordWrap} title="Toggle Word Wrap">
+            <WrapText size={20} color="rgb(0, 0, 0)" />
+          </button>
+          <button onClick={onClear} title="Clear" strokeWidth={1}>
+            <Eraser size={20} color="rgb(239, 68, 68)" />
           </button>
         </div>
       </div>
@@ -27,7 +56,11 @@ const CodeEditor = ({ label, code, onChange, onClear, onCopy }) => {
         language={label.toLowerCase()}
         value={code}
         onChange={onChange}
-        options={{ minimap: { enabled: true }, fontSize: 16 }}
+        options={{
+          minimap: { enabled: true },
+          fontSize: fontSize,
+          wordWrap: wordWrap ? "on" : "off",
+        }}
       />
     </div>
   );
@@ -69,12 +102,6 @@ const WebDevEditor = () => {
     output.contentDocument.body.appendChild(script);
   }, [htmlCode, cssCode, jsCode]);
 
-  const handleClear = () => {
-    setHtmlCode("");
-    setCssCode("");
-    setJsCode("");
-  };
-
   const handleHtmlClear = () => {
     setHtmlCode("");
   };
@@ -92,10 +119,10 @@ const WebDevEditor = () => {
   };
 
   return (
-    <div className="p-4 w-full flex gap-2">
-      <div className="w-1/2">
+    <div className="px-4 w-full flex flex-col h-full gap-2">
+      <div className="w-full flex gap-2 overflow-scroll" id="editors">
         <CodeEditor
-          width = "100%"
+          width="100%"
           label="HTML"
           code={htmlCode}
           onChange={setHtmlCode}
@@ -104,12 +131,14 @@ const WebDevEditor = () => {
         />
         <CodeEditor
           label="CSS"
+          width="100%"
           code={cssCode}
           onChange={setCssCode}
           onClear={handleCSSClear}
           onCopy={handleCopy}
         />
         <CodeEditor
+          width="100%"
           label="JavaScript"
           code={jsCode}
           onChange={setJsCode}
@@ -117,14 +146,11 @@ const WebDevEditor = () => {
           onCopy={handleCopy}
         />
       </div>
-      <button
-        onClick={handleClear}
-        className="fixed bottom-4 right-4 bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Clear All
-      </button>
-
-      <iframe id="output" title="Output" className="w-1/2 h-80vh border" />
+      <iframe
+        id="output"
+        title="Output"
+        className=" h-[87vh] border rounded-lg"
+      />
     </div>
   );
 };

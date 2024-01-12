@@ -48,7 +48,15 @@ const Landing = () => {
   const onSelectChange = (selectedOption) => {
     setLanguage(selectedOption);
     setCode(defaultCode[selectedOption.value] || "");
+    localStorage.setItem(compilerLanguageKey, JSON.stringify(selectedOption));
   };
+
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem(compilerLanguageKey);
+    if (storedLanguage) {
+      setLanguage(JSON.parse(storedLanguage));
+    }
+  }, []);
 
   useEffect(() => {
     if (enterPress && ctrlPress) {
@@ -157,12 +165,12 @@ const Landing = () => {
     }
   };
 
-  useEffect(() => {
-    const storedTheme = localStorage.getItem(compilerThemeKey);
-    defineTheme(storedTheme || "oceanic-next").then((_) =>
-      setTheme({ value: storedTheme || "oceanic-next", label: "Oceanic Next" })
-    );
-  }, []);
+  // useEffect(() => {
+  //   const storedTheme = localStorage.getItem(compilerThemeKey);
+  //   defineTheme(storedTheme || "oceanic-next").then((_) =>
+  //     setTheme({ value: storedTheme || "oceanic-next", label: "Oceanic Next" })
+  //   );
+  // }, []);
 
   const showSuccessToast = (msg) => {
     toast.success(msg || `Compiled Successfully!`, {
@@ -201,24 +209,24 @@ const Landing = () => {
         draggable
         pauseOnHover
       />
-      <div className="flex flex-row w-full ">
-        <div className="px-4 py-2">
+      <div className="flex flex-row w-full lg:justify-start md:justify-start gap-4 justify-between px-4 py-4 lg:py-0 md:py-0">
+        <div className="">
           <LanguagesDropdown onSelectChange={onSelectChange} />
         </div>
-        <div className="px-4 py-2">
+        <div className="">
           <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
         </div>
-        <div className="px-4 py-2">
+        <div className="">
           <button
             onClick={handleClear}
-            className="py-[10px] flex px-4 border-2 border-black rounded-[5px]"
+            className="py-[12px] flex px-4 border-[1px] text-[0.6rem] font-medium text-red-600 bg-red-200 border-red-600 rounded-[5px]"
           >
             Clear
           </button>
         </div>
       </div>
       <div className="flex lg:flex-row md:flex-row space-x-4 items-start p-4 w-full flex-col">
-        <div className="flex flex-col w-full h-full justify-start items-end border">
+        <div className="flex flex-col w-full h-full justify-start items-end ">
           <CodeEditorWindow
             code={code}
             onChange={onChange}
@@ -238,7 +246,7 @@ const Landing = () => {
             <button
               onClick={handleCompile}
               className={classnames(
-                "mt-4 p-2 border-2 border-black rounded-[5px]"
+                "mt-4 p-2 border-2 font-medium border-black rounded-[5px]"
               )}
             >
               {processing ? "Processing..." : "Compile and Execute"}

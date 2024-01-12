@@ -8,9 +8,9 @@ const CustomInput = ({ customInput, setCustomInput }) => {
         rows="5"
         value={customInput}
         onChange={(e) => setCustomInput(e.target.value)}
-        placeholder={`Custom input`}
+        placeholder={`Custom Input`}
         className={classnames(
-          "focus:outline-none w-full border-2 border-black  rounded-md   bg-white mt-2"
+          "focus:outline-none w-full border-2 border-black placeholder:text-4xl px-2 rounded-md bg-white mt-2"
         )}
         style={{
           background: `repeating-linear-gradient(

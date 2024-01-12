@@ -4,7 +4,13 @@ import monacoThemes from "monaco-themes/themes/themelist";
 import { customStyles } from "../constants/customStyles";
 
 //! They were not working.
-const excludedThemes = ["cobalt2", "dracula", "github dark", "github light", "nord"];
+const excludedThemes = [
+  "cobalt2",
+  "dracula",
+  "github dark",
+  "github light",
+  "nord",
+];
 
 const ThemeDropdown = ({ handleThemeChange, theme }) => {
   const filteredThemes = Object.entries(monacoThemes)
@@ -17,10 +23,11 @@ const ThemeDropdown = ({ handleThemeChange, theme }) => {
 
   return (
     <Select
-      placeholder={`Select Theme`}
+      placeholder={`Theme`}
       options={filteredThemes}
       value={theme}
       styles={customStyles}
+      className="font-medium"
       onChange={handleThemeChange}
     />
   );

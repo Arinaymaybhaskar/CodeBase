@@ -33,14 +33,14 @@ function Image({ id }) {
         <div className="flex flex-col justify-center lg:items-center md:items-center bottom-0 h-[100%] w-[100%] gap-10">
           <div className="lg:w-3/5 md:w-3/5 md:h-1/3 lg:h-1/3 flex justify-center items-center ">
             <img
-              className="object-fill border-2"
+              className="object-fill border-2 p-2 rounded-lg border-black overflow-hidden"
               src={`/homeImages/${id}.png`}
               alt={`Component Screenshot ${id}`}
             />
           </div>
           <div className="flex h-36 lg:px-32 md:px-32 mt-16 lg:flex-row md:flex-row flex-col justify-center items-center">
             <div className="flex h-full justify-center items-center lg:w-1/3 flex-col">
-              <h2 className="m-0 text-purple-700 text-5xl font-[700] tracking-[-3px] w-full  leading-[1.2]">
+              <h2 className="m-0 text-purple-700 text-4xl font-[700] tracking-[-3px] w-full leading-[1.2]">
                 {title}
               </h2>
               <a
@@ -51,7 +51,7 @@ function Image({ id }) {
                 <img src="/externalLink.svg" alt="icon" className="w-5 h-5" />
               </a>
             </div>
-            <p className="lg:w-1/3 md:w-1/3">{body}</p>
+            <p className="lg:w-1/3 md:w-1/3 text-xs">{body}</p>
             <a
               href={link}
               className="text-lg font-medium italic flex gap-2 mt-5 items-center lg:hidden md:hidden"

@@ -35,7 +35,10 @@ const OutputWindow = ({ outputDetails }) => {
   };
   return (
     <>
-      <h1 className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 mb-2 lg:mt-0 md:mt-0 mt-5">
+      <h1
+        className=" text-2xl underline mb-2 lg:mt-0 md:mt-0 mt-5 underline-offset-[3px]"
+        style={{ textDecorationThickness: "1px" }}
+      >
         Output
       </h1>
       <div className="w-full h-56 bg-[#1e293b] rounded-md text-white font-normal text-sm overflow-y-auto">

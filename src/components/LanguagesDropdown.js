@@ -10,6 +10,7 @@ const LanguagesDropdown = ({ onSelectChange }) => {
       options={languageOptions}
       styles={customStyles}
       defaultValue={languageOptions[0]}
+      className="font-medium "
       onChange={(selectedOption) => onSelectChange(selectedOption)}
     />
   );

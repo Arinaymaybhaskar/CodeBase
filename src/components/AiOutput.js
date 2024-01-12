@@ -41,7 +41,7 @@ function AiOutput({ outputDetails }) {
       "https://api.openai.com/v1/completions",
       {
         prompt: input,
-        model: "text-davinci-003",
+        model: "gpt-3.5-turbo-instruct",
         max_tokens: 1000,
         n: 1,
         stop: ".",

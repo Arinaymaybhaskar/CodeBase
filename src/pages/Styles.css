@@ -84,6 +84,19 @@ body {
   ::-webkit-scrollbar-corner {
     background: var(--background);
   }
+
+  #options::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  
+  #options::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+  
+  #options::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
   
 
 

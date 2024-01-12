@@ -35,7 +35,7 @@ function App() {
           link="/svg"
         ></SidebarItem>
       </Sidebar>
-      <div className="w-full flex flex-col lg:mt-28 md:mt-28 overflow-hidden h-fit ml-16">
+      <div className="w-full flex flex-col lg:mt-28 md:mt-28 overflow-hidden h-fit lg:ml-0 md:ml-0 ml-[68px]">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/compiler" element={<Landing />} />
