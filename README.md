@@ -20,8 +20,6 @@ I'm an undergrad from Delhi Technological University (formerly DCE). I am majori
 https://codebase-arinaymay.vercel.app/
 
 
-
-
 ## Screenshots
 
 ![App Screenshot](https://github.com/Arinaymaybhaskar/CodeBase/assets/101462720/71f64ceb-3979-429e-98c1-6dd4d2e8f572)
@@ -35,6 +33,14 @@ https://codebase-arinaymay.vercel.app/
 
 
 
+
+
+## 🛠 Tech Stack and External Packages
+#### ReactJS
+#### TailwindCSS
+#### Framer Motion
+#### Monaco Editor
+#### Lucide React
 
 
 ## Features
