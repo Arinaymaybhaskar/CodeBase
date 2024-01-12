@@ -42,9 +42,8 @@ function AiOutput({ outputDetails }) {
       {
         prompt: input,
         model: "gpt-3.5-turbo-instruct",
-        max_tokens: 1000,
+        max_tokens: 2000,
         n: 1,
-        stop: ".",
       },
       {
         headers: {
@@ -57,7 +56,13 @@ function AiOutput({ outputDetails }) {
     return response.data.choices[0].text;
   };
 
-  const request = `what is wrong with my ${outputDetails.language.name} code? \n ${code}. this is the output I am getting: ${codeOutput}`;
+  const request = `
+  What is wrong with my code?
+  \nThis is the language I am using: \n${outputDetails.language.name}
+  \nThis is my code: \n\`\`\`${outputDetails.language.name}\n${code}\n\`\`\`
+  \nThis is the output I am getting:\n${atob(codeOutput)}.
+  \nTell the problem in a concise sentence but if there is an updated code give only the code snippet where the changes are required.
+`;
 
   async function handleClick() {
     try {
@@ -91,6 +96,7 @@ function AiOutput({ outputDetails }) {
           >
             ASK
           </button>
+          <p>{request}</p>
         </div>
       )}
     </div>

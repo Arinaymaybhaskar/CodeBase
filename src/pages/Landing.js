@@ -13,11 +13,14 @@ import OutputDetails from "../components/OutputDetails";
 import ThemeDropdown from "../components/ThemeDropdown";
 import LanguagesDropdown from "../components/LanguagesDropdown";
 import { defaultCode } from "../constants/LanguageDefaultCode";
+import AiOutput from "../components/AiOutput";
+import Popup from "../components/Popup";
 
 const Landing = () => {
   const [customInput, setCustomInput] = useState("");
   const [outputDetails, setOutputDetails] = useState(null);
   const [processing, setProcessing] = useState(null);
+  const [buttonPopup, SetButtonPopup] = useState(false);
   const [clear, setClear] = useState(false);
   const compilerCodeKey = "compilerCodeKey";
   const compilerLanguageKey = "compilerLanguageKey";
@@ -255,6 +258,9 @@ const Landing = () => {
           {outputDetails && (
             <div>
               <OutputDetails outputDetails={outputDetails} />
+              <Popup trigger={buttonPopup} setTrigger={SetButtonPopup}>
+                <AiOutput outputDetails={outputDetails} code={code} />
+              </Popup>
             </div>
           )}
         </div>

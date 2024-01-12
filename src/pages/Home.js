@@ -85,8 +85,8 @@ const Home = () => {
     <>
       <div className="lg:h-[80vh] md:h-[80vh] h-[100vh] w-full gap-10 flex lg:flex-row flex-col justify-center lg:items-center md-items-center lg:px-20 px-10">
         <div className="lg:w-1/3">
-          <h3 className="text-3xl font-bold">Welcome to</h3>
-          <h1 className="lg:text-7xl text-5xl text-purple-700">Code-Base</h1>
+          <h3 className="text-3xl font-medium mb-2">Welcome to</h3>
+          <img src="/icon.svg" className="" alt="code base" />
         </div>
         <p className="lg:w-1/3 font-medium lg:text-lg text-base">
           Your all-in-one solution for streamlined and efficient programming!

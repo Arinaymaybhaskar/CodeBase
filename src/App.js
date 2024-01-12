@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import AI from "./pages/ai";
+import Test from "./pages/Test";
 import Sidebar, { SidebarItem } from "./components/Sidebar";
 import { Tv2, Code2, Braces, Image } from "lucide-react";
 
@@ -42,6 +43,7 @@ function App() {
           <Route path="/svg" element={<SvgEditor />} />
           <Route path="/web" element={<WebDevEditor />} />
           <Route path="/ai" element={<AI />} />
+          <Route path="/test" element={<Test />}></Route>
         </Routes>
       </div>
     </div>

@@ -11,13 +11,13 @@ export default function Sidebar({ children }) {
     <aside className="h-screen lg:hidden md:hidden w-fit fixed left-0 z-20">
       <nav className="h-full flex flex-col bg-white border-r shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
-          <h1
+          <img
+            src="/icon.svg"
             className={`overflow-hidden transition-all text-xl font-extrabold ${
               expanded ? "w-32" : "w-0"
             }`}
-          >
-            CodeBase
-          </h1>
+            alt="code base"
+          />
           <button
             onClick={() => setExpanded((curr) => !curr)}
             className="p-1.5 rounded-lg bg-gray-50 hover:bg-purple-100"
